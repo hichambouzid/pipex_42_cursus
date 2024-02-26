@@ -1,0 +1,16 @@
+total 3248
+-rw-r--r--  1 mac  staff      128 Feb 21 09:59 Makefile
+-rw-r--r--@ 1 mac  staff       28 Feb 13 19:04 README.md
+-rwxr-xr-x  1 mac  staff    33560 Feb 25 15:58 a.out
+-rw-r--r--  1 mac  staff     1108 Feb 25 15:58 execve.c
+-rw-r--r--  1 mac  staff        0 Feb 25 16:27 fil
+-rw-r--r--  1 mac  staff     1052 Feb 25 15:58 ft_pipex.c
+-rw-r--r--  1 mac  staff     1333 Feb 25 15:32 ft_pipex.h
+-rw-r--r--  1 mac  staff     3083 Feb 25 12:29 ft_split.c
+-rw-r--r--  1 mac  staff     1515 Feb 25 15:36 ft_util_0.c
+-rw-r--r--  1 mac  staff        0 Feb 25 13:08 ft_util_1.c
+-rw-r--r--  1 mac  staff        0 Feb 25 13:08 ft_util_2.c
+-rw-r--r--  1 mac  staff        0 Feb 20 14:04 infile
+-rw-r--r--  1 mac  staff       74 Feb 25 15:21 main.c
+-rw-r--r--  1 mac  staff        9 Feb 20 14:04 outfile
+-rw-r--r--@ 1 mac  staff  1586470 Feb 13 19:00 pipex.subject.pdf
