@@ -6,7 +6,7 @@
 /*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 11:21:31 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/02/25 15:58:11 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:31:20 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 
 int main()
 {
-	char *argc[] = {"ls", "-l", NULL};
+	char *argc[] = {"ns","/sbin/", NULL};
 	char *nvp[] = {NULL};
-	execve("/bin/ls", argc, nvp);
+	printf("-----------> %d\n", execve("/bin/ls", argc, nvp));
+	// int i = access("/bin/fsck", R_OK | X_OK | F_OK);
+	// printf("---------> %d\n", F_OK);
+	// printf("---------> %d\n", i);
 	// execve("/bin/ls", argc[1], nvp);
-	// perror("execve");
 	return (1);
 }

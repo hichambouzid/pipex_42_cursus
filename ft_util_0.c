@@ -6,7 +6,7 @@
 /*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:08:54 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/02/25 15:36:16 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/02/26 15:16:42 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,38 @@ char **ft_parce_env(char **envp)
 	}
 	tab = ft_split(envp[index] + i, ':');
 	return (tab);
+}
+
+int ft_strlen(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	int		total;
+	char	*ptr;
+	int		i;
+	int		j;
+
+	total = ft_strlen(s1) + ft_strlen(s2);
+	ptr = malloc(sizeof(char) * (total + 1));
+	if (!ptr)
+		return (NULL);
+	ptr[total] = 0;
+	i = 0;
+	j = 0;
+	while (s1[i])
+	{
+		ptr[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+		ptr[i++] = s2[j++];
+	return (ptr);
 }
