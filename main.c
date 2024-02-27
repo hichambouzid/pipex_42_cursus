@@ -1,6 +1,9 @@
 #include "ft_pipex.h"
 
-int main()
+
+
+int main(int ac, char **av)
 {
-	printf("%d\n", is_separator(0, 1));
+	int fd = open(av[1], O_RDONLY);
+	printf("-----> %d\n", fd);
 }

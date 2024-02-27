@@ -6,7 +6,7 @@
 /*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:08:54 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/02/26 15:16:42 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:09:32 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int ft_index(char **envp, char *str)
 	i = 0;
 	while (envp[i])
 	{
-		if (ft_strcmp(envp[i], "PATH") == 0)
+		if (ft_strcmp(envp[i], str) == 0)
 			return (i);
 		i++;
 	}
@@ -77,6 +77,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	int		i;
 	int		j;
 
+	if (!s1)
+		s1 = ft_strdup("");
 	total = ft_strlen(s1) + ft_strlen(s2);
 	ptr = malloc(sizeof(char) * (total + 1));
 	if (!ptr)
