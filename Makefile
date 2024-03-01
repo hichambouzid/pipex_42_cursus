@@ -2,7 +2,7 @@ NAME = pipex
 
 CFLAGS = -Wall -Wextra -Werror
 
-CFILS = ft_pipex.c  ft_split.c  ft_util_0.c ft_util_1.c ft_util_2.c
+CFILS = ft_pipex.c  ft_split.c  ft_util_0.c ft_util_1.c ft_util_2.c ft_util_3.c
 
 OBJS = $(CFILS:.c=.o)
 

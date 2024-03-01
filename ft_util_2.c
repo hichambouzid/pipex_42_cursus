@@ -6,16 +6,16 @@
 /*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:11:24 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/02/27 20:39:40 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/02/29 16:14:06 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-char *ft_strdup(char *s1)
+char	*ft_strdup(char *s1)
 {
-	int i;
-	char *str;
+	int		i;
+	char	*str;
 
 	i = 0;
 	i = ft_strlen(s1);
@@ -26,7 +26,7 @@ char *ft_strdup(char *s1)
 	while (s1[i])
 	{
 		str[i] = s1[i];
-		i++; 
+		i++;
 	}
 	str[i] = 0;
 	return (str);
@@ -37,7 +37,7 @@ char	*ft_get_read_all(int fd)
 	char	*str;
 	char	*tmp;
 	char	*v;
-	int i;
+	int		i;
 
 	tmp = malloc(sizeof(char) * SIZE_M);
 	if (!tmp)
@@ -63,10 +63,10 @@ char	*ft_get_read_all(int fd)
 	return (NULL);
 }
 
-char *ft_same_arg(char **ptr, char *cmd, int index)
+char	*ft_same_arg(char **ptr, char *cmd, int index)
 {
-	char *tmp;
-	char *tmp1;
+	char	*tmp;
+	char	*tmp1;
 
 	tmp = ft_strjoin(ptr[index], "/");
 	tmp1 = ft_strjoin(tmp, cmd);
@@ -75,3 +75,12 @@ char *ft_same_arg(char **ptr, char *cmd, int index)
 	ptr[index] = tmp1;
 	return (ptr[index]);
 }
+
+char	*ft_chose_path(char *path, char *envp)
+{
+	if (!access(path, F_OK | X_OK))
+		return (path);
+	else
+		return (envp);
+}
+

@@ -12,9 +12,9 @@
 
 #include "ft_pipex.h"
 
-int ft_strcmp(char *s1, char *s2)
+int	ft_strcmp(char *s1, char *s2)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s1[i] && s2[i])
@@ -26,9 +26,9 @@ int ft_strcmp(char *s1, char *s2)
 	return (0);
 }
 
-int ft_index(char **envp, char *str)
+int	ft_index(char **envp, char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (envp[i])
@@ -40,11 +40,11 @@ int ft_index(char **envp, char *str)
 	return (-1);
 }
 
-char **ft_parce_env(char **envp)
+char	**ft_parce_env(char **envp)
 {
-	int i;
-	int index;
-	char **tab;
+	int		i;
+	int		index;
+	char	**tab;
 
 	index = ft_index(envp, "PATH");
 	i = 0;
@@ -53,16 +53,16 @@ char **ft_parce_env(char **envp)
 	while (envp[index][i])
 	{
 		if (is_separator(envp[index][i], '/'))
-			break;
+			break ;
 		i++;
 	}
 	tab = ft_split(envp[index] + i, ':');
 	return (tab);
 }
 
-int ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -72,10 +72,10 @@ int ft_strlen(char *str)
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	int		total;
-	char	*ptr;
-	int		i;
-	int		j;
+	int total;
+	char *ptr;
+	int i;
+	int j;
 
 	if (!s1)
 		s1 = ft_strdup("");
