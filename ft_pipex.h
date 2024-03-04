@@ -6,7 +6,7 @@
 /*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:36:06 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/02/29 20:53:42 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/04 15:50:51 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,17 @@ typedef struct variables
 	char	**env;
 	char	**cmd1;
 	char	**cmd2;
+	char	*tmpr;
 	char 	*buffer;
 	int		fd1;
 	int		fd2;
 	int		index;
+	char 	*line;
 	char	*path;
 }t_pipe;
 
 #define SIZE_M 2147483647
+#define BUFFER_SIZE 2147483647
 /*
 * util functions
 * used in parcing
@@ -48,6 +51,15 @@ int ft_strlen(char *str);
 int ft_strleen(char **ptr);
 int	ft_putstr_fd(char *s, int fd);
 char	*ft_strdup(char *s1);
+
+// functions used in bonus part
+
+int		ft_check(char *str, char c);
+char	*ft_line(char *ptr);
+char	*get_next_line(int fd);
+char	*get_read(char *ptr, int fd);
+char *ft_get_buffer(char **av);
+
 /*
 * main functions 
 * where we use system calls
