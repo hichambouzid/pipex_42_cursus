@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_util_0.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:08:54 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/02/27 17:09:32 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/05 15:26:08 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ int	ft_strlen(char *str)
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	int total;
-	char *ptr;
-	int i;
-	int j;
+	int		total;
+	char	*ptr;
+	int		i;
+	int		j;
 
 	if (!s1)
 		s1 = ft_strdup("");

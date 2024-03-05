@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:05:34 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/02/27 15:02:55 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/05 15:27:26 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
-
-// #include <stdio.h>
 
 int	is_separator(char s, char c)
 {
@@ -82,8 +80,8 @@ char	**ft_alloc(char **ptr, const char *s, char c, int e)
 
 char	**ft_split(char const *s, char c)
 {
-	char **ptr;
-	int count;
+	char	**ptr;
+	int		count;
 
 	if (!s || !*s)
 	{

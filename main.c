@@ -1,7 +1,6 @@
-#include<stdio.h>
-#include<unistd.h>
-#include<sys/wait.h>
-
+#include <stdio.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 // int main()
 // {
@@ -29,7 +28,7 @@
 // 	{
 // 		r = read(pidfd[0], tab, 100);
 // 		tab[r] = 0;
-// 		printf("the return is %s\n", tab);
+// 		printf("the return (is %s\n", tab));
 // 		printf("hello i'm a parent proccess %d\n", getpid());
 // 		wait(NULL);
 // 	}

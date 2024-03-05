@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_here_doc_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 12:39:05 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/04 15:51:35 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/05 15:23:39 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-char *ft_get_buffer(char **av)
+char	*ft_get_buffer(char **av)
 {
-	t_pipe pe;
+	t_pipe	pe;
 
-	pe.buffer = 0;	
+	pe.buffer = 0;
 	while (1)
-	{		
+	{
 		ft_putstr_fd("pipe heredoc> ", 1);
 		pe.line = get_next_line(0);
 		pe.tmpr = pe.buffer;
@@ -28,14 +28,15 @@ char *ft_get_buffer(char **av)
 		if (!ft_strcmp(pe.line, av[2]))
 		{
 			free(pe.line);
-			break;
+			break ;
 		}
-			else
-				free(pe.line);
+		else
+			free(pe.line);
 	}
 	return (pe.buffer);
 }
-void ft_parce_cmd2(t_pipe *p, char **av, char **envp)
+
+void	ft_parce_cmd2(t_pipe *p, char **av, char **envp)
 {
 	p->cmd1 = ft_split(av[3], ' ');
 	p->cmd2 = ft_split(av[4], ' ');

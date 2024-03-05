@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:36:36 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/04 15:04:40 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/05 15:29:17 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	ft_parce_1(t_pipe *p, char **av, char **envp)
 		ft_putstr_fd("command not found\n", 2);
 		exit(-1);
 	}
-	// p->fd = open(av[1], O_RDONLY);
 	if (p->fd1 < 0 || p->fd2 < 0)
 	{
 		ft_free(ft_strleen(p->cmd1), p->cmd1);
@@ -33,25 +32,18 @@ void	ft_parce_1(t_pipe *p, char **av, char **envp)
 		ft_free(ft_strleen(p->env), p->env);
 		exit(-1);
 	}
-	// p->buffer = ft_get_read_all(p->fd1);
-	// p->cmd1 = ft_add_to_last(p->cmd1, p->buffer);
 }
 
-	// ft_parce_1(&p, av, envp);
-	// p.index = ft_cmd_valid_exist(p.env, p.cmd1);
-	// p.env[p.index] = ft_same_arg(p.env, p.cmd1[0], p.index);
-	// p.path = ft_chose_path(p.env[p.index], p.cmd1[0]);
-	// execve(p.path, p.cmd1, envp);
-void pipex(t_pipe p, char **av, char **envp)
+void	pipex(t_pipe p, char **av, char **envp)
 {
-	int pipfd[2];
-	pid_t pp;
-	
+	int		pipfd[2];
+	pid_t	pp;
+
 	pipe(pipfd);
 	ft_parce_1(&p, av, envp);
 	pp = fork();
 	if (pp == 0)
-		 ft_child_proccess(&p, pipfd, envp);
+		ft_child_proccess(&p, pipfd, envp);
 	else
 	{
 		ft_parent_proccess(&p, pipfd, envp);
@@ -62,11 +54,11 @@ void pipex(t_pipe p, char **av, char **envp)
 int	main(int ac, char **av, char **envp)
 {
 	t_pipe	p;
-	// int i = 0;
+
 	if (ac != 5)
 		return (ft_putstr_fd("error in argument\n", 2));
 	p.fd1 = open(av[1], O_RDONLY);
-	p.fd2 = open(av[4], O_RDWR | O_CREAT | O_TRUNC ,0777);
+	p.fd2 = open(av[4], O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (p.fd1 < 0 || p.fd2 < 0)
 		return (ft_putstr_fd("no such file or directory\n", 2));
 	pipex(p, av, envp);

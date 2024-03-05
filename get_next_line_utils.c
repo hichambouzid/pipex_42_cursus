@@ -12,7 +12,6 @@
 
 #include "ft_pipex.h"
 
-
 int	ft_check(char *str, char c)
 {
 	int	i;
