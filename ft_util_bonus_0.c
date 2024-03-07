@@ -1,33 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex.c                                         :+:      :+:    :+:   */
+/*   ft_util_bonus_0.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 10:36:36 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/07 14:53:50 by hibouzid         ###   ########.fr       */
+/*   Created: 2024/03/06 21:32:59 by hibouzid          #+#    #+#             */
+/*   Updated: 2024/03/06 21:57:08 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-
-
-int main(int ac, char **av, char **envp)
+int **ft_pipes(int ac)
 {
-	t_pipe p;
+	int **tab;
+	int len;
+	int i;
 
-	if (ac != 5)
-		return (ft_putstr_fd("error in argument\n", 2));
-	p.fd1 = open(av[1], O_RDONLY);
-	p.fd2 = open(av[4], O_RDWR | O_CREAT | O_TRUNC, 0777);
-	if (p.fd1 < 0 || p.fd2 < 0)
-		return (ft_putstr_fd("no such file or directory\n", 2));
-	pipex(p, av, envp);
+	len = ac - 4;
+	tab = malloc(sizeof(int *) * (len + 1));
+	if (!tab)
+	{
+		ft_putstr_fd("ERROR\n", 2);
+		exit(-1);
+	}
+	tab[len] = 0;
+	i = 0;
+	while (i < len)
+	{
+		tab[i] = malloc(sizeof(int) * 2);
+		if (pipe(tab[i]) < 0)
+			{
+				ft_putstr_fd("ERROR\n", 2);
+				exit(-1);
+			}
+		i++;
+	}
+	return (tab);
 }
-
-// int main(int ac, char **av, char **envp)
-// {
-// 	ft_e(ac, av, envp);
-// }

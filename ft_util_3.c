@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_util_3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:44:37 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/05 15:26:29 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/07 14:53:58 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,43 @@ int	ft_parent_proccess(t_pipe *p, int *pipfd, char **envp)
 	close(pipfd[1]);
 	execve(p->path, p->cmd2, envp);
 	return (0);
+}
+
+void	pipex(t_pipe p, char **av, char **envp)
+{
+	int		pipfd[2];
+	pid_t	pp;
+
+	pipe(pipfd);
+	ft_parce_1(&p, av, envp);
+	pp = fork();
+	if (pp == 0)
+		ft_child_proccess(&p, pipfd, envp);
+	else
+	{
+		ft_parent_proccess(&p, pipfd, envp);
+		wait(NULL);
+	}
+}
+
+void ft_parce_1(t_pipe *p, char **av, char **envp)
+{
+	p->cmd1 = ft_split(av[2], ' ');
+	p->cmd2 = ft_split(av[3], ' ');
+	p->env = ft_parce_env(envp);
+	if (ft_parce_cmd(p->cmd1, p->cmd2, p->env) == -1)
+	{
+		ft_free(ft_strleen(p->cmd1), p->cmd1);
+		ft_free(ft_strleen(p->cmd2), p->cmd2);
+		ft_free(ft_strleen(p->env), p->env);
+		ft_putstr_fd("command not found\n", 2);
+		exit(-1);
+	}
+	if (p->fd1 < 0 || p->fd2 < 0)
+	{
+		ft_free(ft_strleen(p->cmd1), p->cmd1);
+		ft_free(ft_strleen(p->cmd2), p->cmd2);
+		ft_free(ft_strleen(p->env), p->env);
+		exit(-1);
+	}
 }

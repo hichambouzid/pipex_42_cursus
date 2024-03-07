@@ -1,35 +1,33 @@
 #include <stdio.h>
-#include <sys/wait.h>
 #include <unistd.h>
+#include <sys/types.h>
+ #include <sys/wait.h>
+ 
+int main() {
+    int i;
+    pid_t pid;
 
-// int main()
-// {
-// 	int pidfd[2];
-// 	char tab[100];
-// 	int r;
-// 	pid_t p;
+    // Create 3 child processes using fork()
+    for (i = 0; i < 3; i++) {
+        pid = fork();
 
-// 	if (pipe(pidfd) == -1)
-// 		return (write(2, "error\n", sizeof("error\n")));
+        if (pid == 0) { // Child process
+            printf("Child %d with PID %d\n", i + 1, getpid());
+            // Child process exits after printing
+            return 0;
+        } else if (pid < 0) { // Error handling
+            perror("fork failed");
+            return 1;
+        }
+    }
 
-// 	p = fork();
-// 	if (p < 0)
-// 	{
-// 		printf("error\n");
-// 		return (0);
-// 	}
-// 	else if (p == 0)
-// 	{
-// 		printf("hello i'm a child procces %d \n", getpid());
-// 		write(pidfd[1], "hello world\n", 11);
-// 		close(pidfd[1]);
-// 	}
-// 	else
-// 	{
-// 		r = read(pidfd[0], tab, 100);
-// 		tab[r] = 0;
-// 		printf("the return (is %s\n", tab));
-// 		printf("hello i'm a parent proccess %d\n", getpid());
-// 		wait(NULL);
-// 	}
-// }
+    // Parent process
+    // Wait for all child processes to complete
+    for (i = 0; i < 3; i++) {
+        wait(NULL);
+    }
+
+    printf("Parent process with PID %d\n", getpid());
+
+    return 0;
+}
