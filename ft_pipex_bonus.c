@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:08:55 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/07 15:53:43 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/07 18:01:43 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,32 @@ void pipex_her_doc(char **envp, t_pipe p)
 	}
 }
 
+void ft_close(int **tabfd, int fd1, int fd2)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (tabfd[i])
+	{
+		j = 0;
+		while (j < 2)
+		{
+			if (tabfd[i][j] != fd1 && tabfd[i][j] != fd2)
+				close(tabfd[i][j]);
+			j++;
+		}
+		i++;
+	}
+	// close(0);
+	// close(1);
+}
+
 int ft_multiple_pips(t_pipe *p, char **envp, char **av, int ac)
 {
 	t_pipe pip;
 	int **tab;
+	pid_t pp;
 
 	if (ac == 5)
 	{
@@ -89,13 +111,14 @@ int ft_multiple_pips(t_pipe *p, char **envp, char **av, int ac)
 		return (0);
 	}
 	tab = ft_pipes(ac);
-	pip.i = 1;
-	while (pip.i < ac)
+	// printf("---> %d\n", ft_strleen(tab));
+	pip.i = 2;
+	while (pip.i < ac - 1)
 	{
-		printf("im here\n");
-		if (pip.i == 1)
+		pp = fork();
+		if (pip.i == 2 && pp == 0)
 		{
-			printf("im here1\n");
+			// printf("im here1 i === %d\n", pip.i);
 			if (dup2(p->fd1, 0) == -1 || dup2(tab[0][1], 1) == -1)
 			{
 				perror("ERROR IN DUP\n");
@@ -103,51 +126,52 @@ int ft_multiple_pips(t_pipe *p, char **envp, char **av, int ac)
 			}
 			p->cmd1 = ft_split(av[pip.i], ' ');
 			p->index = ft_cmd_valid_exist(p->env, p->cmd1);
-			close(tab[pip.i - 1][0]);
-			close(p->fd1);
+			ft_close(tab, tab[0][1], p->fd1);
 			p->env[p->index] = ft_same_arg(p->env, p->cmd1[0], p->index);
 			p->path = ft_chose_path(p->env[p->index], p->cmd1[0]);
 			execve(p->path, p->cmd1, envp);
+			close(p->fd1);
 		}
-		else if (pip.i == ac - 1)
+		else if (pip.i == ac - 2 && pp == 0)
 		{
 
-			if (dup2(tab[pip.i - 2][0], 0) == -1 || dup2(p->fd2, 1) == -1)
+			// printf("im here2 i === %d\n", pip.i);
+			if (dup2(tab[pip.i - 3][0], 0) == -1 || dup2(p->fd2, 1) == -1)
 			{
 				perror("ERROR IN DUP\n");
 				exit(-1);
 			}
-			close(tab[pip.i - 1][1]);
-			close(0);
+			ft_close(tab, tab[pip.i - 3][0], p->fd2);
 			p->cmd1 = ft_split(av[pip.i], ' ');
 			p->index = ft_cmd_valid_exist(p->env, p->cmd1);
 			p->env[p->index] = ft_same_arg(p->env, p->cmd1[0], p->index);
 			p->path = ft_chose_path(p->env[p->index], p->cmd1[0]);
-			printf("im here2\n");
 			execve(p->path, p->cmd1, envp);
 		}
-		else
+		else if (pp == 0)
 		{
-			printf("im here3\n");
-			if (dup2(tab[pip.i - 2][0], 0) == -1 || dup2(tab[pip.i - 1][1], 1) == -1)
+			// printf("im here3 i == %d\n", pip.i);
+			if (dup2(tab[pip.i - 3][0], 0) == -1 || dup2(tab[pip.i - 2][1], 1) == -1)
 			{
 				perror("ERROR IN DUP\n");
 				exit(-1);
 			}
-			close(tab[pip.i - 2][1]);
-			close(tab[pip.i - 1][0]);
+			ft_close(tab, tab[pip.i - 3][0], tab[pip.i - 2][1]);
 			p->cmd1 = ft_split(av[pip.i], ' ');
 			p->index = ft_cmd_valid_exist(p->env, p->cmd1);
 			p->env[p->index] = ft_same_arg(p->env, p->cmd1[0], p->index);
 			p->path = ft_chose_path(p->env[p->index], p->cmd1[0]);
 			execve(p->path, p->cmd1, envp);
 		}
+		// printf("----> i %d\n", pip.i);
 		pip.i++;
 	}
 	pip.i = 1;
-	while (pip.i < ac)
+	close(p->fd2);
+	// while (pip.i++ < ac)
+		if (pp)
 		wait(NULL);
-	printf("i think is donne\n");
+	// printf("i think is donne\n");
 	return (0);
 }
 
@@ -167,7 +191,7 @@ int main(int ac, char **av, char **envp)
 	else
 	{
 		pe.fd1 = open(av[1], O_RDONLY);
-		pe.fd2 = open(av[ac - 1], O_CREAT | O_WRONLY | O_TRUNC, 0777);
+		pe.fd2 = open(av[ac - 1], O_RDWR | O_CREAT | O_TRUNC, 0777);
 		if (pe.fd1 < 0 || pe.fd2 < 0)
 			return (0);
 		pe.env = ft_parce_env(envp);
