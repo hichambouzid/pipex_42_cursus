@@ -1,33 +1,43 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/types.h>
- #include <sys/wait.h>
- 
-int main() {
-    int i;
-    pid_t pid;
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/08 15:51:15 by hibouzid          #+#    #+#             */
+/*   Updated: 2024/03/08 15:51:59 by hibouzid         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-    // Create 3 child processes using fork()
-    for (i = 0; i < 3; i++) {
-        pid = fork();
+// #include <stdio.h>
+// #include <sys/types.h>
+// #include <sys/wait.h>
+// #include <unistd.h>
 
-        if (pid == 0) { // Child process
-            printf("Child %d with PID %d\n", i + 1, getpid());
-            // Child process exits after printing
-            return 0;
-        } else if (pid < 0) { // Error handling
-            perror("fork failed");
-            return 1;
-        }
-    }
+// int	main(void)
+// {
+// 	int		i;
+// 	pid_t	pid;
 
-    // Parent process
-    // Wait for all child processes to complete
-    for (i = 0; i < 3; i++) {
-        wait(NULL);
-    }
-
-    printf("Parent process with PID %d\n", getpid());
-
-    return 0;
-}
+// 	for (i = 0; i < 3; i++)
+// 	{
+// 		pid = fork();
+// 		if (pid == 0)
+// 		{
+// 			printf("Child %d with PID %d\n", i + 1, getpid());
+// 			return (0);
+// 		}
+// 		else if (pid < 0)
+// 		{ // Error handling
+// 			perror("fork failed");
+// 			return (1);
+// 		}
+// 	}
+// 	for (i = 0; i < 3; i++)
+// 	{
+// 		wait(NULL);
+// 	}
+// 	printf("Parent process with PID %d\n", getpid());
+// 	return (0);
+// }

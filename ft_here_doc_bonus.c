@@ -6,7 +6,7 @@
 /*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 12:39:05 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/05 15:23:39 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/08 19:36:30 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ char	*ft_get_buffer(char **av)
 		pe.buffer = ft_strjoin(pe.buffer, pe.line);
 		if (pe.tmpr)
 			free(pe.tmpr);
-		if (!ft_strcmp(pe.line, av[2]))
+			printf("i'm here\n");
+		if (ft_strcmp(pe.line, av[2]) == 0)
 		{
 			free(pe.line);
 			break ;

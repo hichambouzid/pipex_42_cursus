@@ -12,11 +12,9 @@
 
 #include "ft_pipex.h"
 
-
-
-int main(int ac, char **av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
-	t_pipe p;
+	t_pipe	p;
 
 	if (ac != 5)
 		return (ft_putstr_fd("error in argument\n", 2));

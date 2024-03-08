@@ -6,7 +6,7 @@
 /*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:08:54 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/05 15:26:08 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/08 19:39:53 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,17 @@ int	ft_strcmp(char *s1, char *s2)
 	int	i;
 
 	i = 0;
-	while (s1[i] && s2[i])
+	printf("---> s1%s\n", s1);
+	printf("---> s2%s\n", s2);
+	while (s1[i] || s2[i])
 	{
 		if (s1[i] != s2[i])
+		{
 			return (s1[i] - s2[i]);
+		}
 		i++;
 	}
+			printf("----------\n");
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_util_3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:44:37 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/07 14:53:58 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/08 15:52:11 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	pipex(t_pipe p, char **av, char **envp)
 	}
 }
 
-void ft_parce_1(t_pipe *p, char **av, char **envp)
+void	ft_parce_1(t_pipe *p, char **av, char **envp)
 {
 	p->cmd1 = ft_split(av[2], ' ');
 	p->cmd2 = ft_split(av[3], ' ');
