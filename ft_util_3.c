@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_util_3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:44:37 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/08 15:52:11 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:10:56 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-int	ft_child_proccess(t_pipe *p, int *pipfd, char **envp)
+int ft_child_proccess(t_pipe *p, int *pipfd, char **envp)
 {
 	if (dup2(pipfd[1], 1) == -1 || dup2(p->fd1, 0))
 		return (ft_putstr_fd("Error has occured in dup\n", 2));
@@ -25,7 +25,7 @@ int	ft_child_proccess(t_pipe *p, int *pipfd, char **envp)
 	return (0);
 }
 
-int	ft_parent_proccess(t_pipe *p, int *pipfd, char **envp)
+int ft_parent_proccess(t_pipe *p, int *pipfd, char **envp)
 {
 	if (dup2(pipfd[0], 0) == -1 || dup2(p->fd2, 1) == -1)
 		return (ft_putstr_fd("Error has occured in dup\n", 2));
@@ -38,12 +38,13 @@ int	ft_parent_proccess(t_pipe *p, int *pipfd, char **envp)
 	return (0);
 }
 
-void	pipex(t_pipe p, char **av, char **envp)
+void pipex(t_pipe p, char **av, char **envp)
 {
-	int		pipfd[2];
-	pid_t	pp;
+	int pipfd[2];
+	pid_t pp;
 
 	pipe(pipfd);
+	ft_first_check(av[2], av[3]);
 	ft_parce_1(&p, av, envp);
 	pp = fork();
 	if (pp == 0)
@@ -55,8 +56,10 @@ void	pipex(t_pipe p, char **av, char **envp)
 	}
 }
 
-void	ft_parce_1(t_pipe *p, char **av, char **envp)
+void ft_parce_1(t_pipe *p, char **av, char **envp)
 {
+	// printf("2 -- %s\n", av[2]);
+	// printf("3 -- %s\n", av[3]);
 	p->cmd1 = ft_split(av[2], ' ');
 	p->cmd2 = ft_split(av[3], ' ');
 	p->env = ft_parce_env(envp);
@@ -75,4 +78,19 @@ void	ft_parce_1(t_pipe *p, char **av, char **envp)
 		ft_free(ft_strleen(p->env), p->env);
 		exit(-1);
 	}
+}
+
+
+int ft_strncmp(char *s1, char *s2, int n)
+{
+	int i;
+
+	i = 0;
+	while ((s1[i] && s2[i]) && i < n)
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
+	}
+	return (0);
 }

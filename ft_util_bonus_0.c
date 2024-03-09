@@ -1,7 +1,8 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_util_bonus_0.c                                  :+:      :+:    :+:   */
+/*
+								 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,11 +13,11 @@
 
 #include "ft_pipex.h"
 
-int	**ft_pipes(int ac)
+int **ft_pipes(int ac)
 {
-	int	**tab;
-	int	len;
-	int	i;
+	int **tab;
+	int len;
+	int i;
 
 	len = ac - 4;
 	tab = malloc(sizeof(int *) * (len + 1));
@@ -40,10 +41,10 @@ int	**ft_pipes(int ac)
 	return (tab);
 }
 
-void	ft_close(int **tabfd, int fd1, int fd2)
+void ft_close(int **tabfd, int fd1, int fd2)
 {
-	int	i;
-	int	j;
+	int i;
+	int j;
 
 	i = 0;
 	while (tabfd[i])

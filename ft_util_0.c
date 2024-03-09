@@ -3,22 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_util_0.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:08:54 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/08 19:39:53 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/09 14:36:36 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-int	ft_strcmp(char *s1, char *s2)
+int ft_strcmp(char *s1, char *s2)
 {
-	int	i;
+	int i;
 
 	i = 0;
-	printf("---> s1%s\n", s1);
-	printf("---> s2%s\n", s2);
 	while (s1[i] || s2[i])
 	{
 		if (s1[i] != s2[i])
@@ -27,29 +25,29 @@ int	ft_strcmp(char *s1, char *s2)
 		}
 		i++;
 	}
-			printf("----------\n");
+	// printf("----------\n");
 	return (0);
 }
 
-int	ft_index(char **envp, char *str)
+int ft_index(char **envp, char *str)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (envp[i])
 	{
-		if (ft_strcmp(envp[i], str) == 0)
+		if (ft_strncmp(envp[i], str, ft_strlen(str)) == 0)
 			return (i);
 		i++;
 	}
 	return (-1);
 }
 
-char	**ft_parce_env(char **envp)
+char **ft_parce_env(char **envp)
 {
-	int		i;
-	int		index;
-	char	**tab;
+	int i;
+	int index;
+	char **tab;
 
 	index = ft_index(envp, "PATH");
 	i = 0;
@@ -58,16 +56,17 @@ char	**ft_parce_env(char **envp)
 	while (envp[index][i])
 	{
 		if (is_separator(envp[index][i], '/'))
-			break ;
+			break;
 		i++;
 	}
 	tab = ft_split(envp[index] + i, ':');
+	// printf("tab %s", tab[0]);
 	return (tab);
 }
 
-int	ft_strlen(char *str)
+int ft_strlen(char *str)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (str[i])
@@ -75,12 +74,12 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char *ft_strjoin(char *s1, char *s2)
 {
-	int		total;
-	char	*ptr;
-	int		i;
-	int		j;
+	int total;
+	char *ptr;
+	int i;
+	int j;
 
 	if (!s1)
 		s1 = ft_strdup("");

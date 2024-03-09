@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_util_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:11:24 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/05 15:28:15 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:19:08 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,30 @@ char	*ft_chose_path(char *path, char *envp)
 		return (path);
 	else
 		return (envp);
+}
+
+void ft_first_check(char *av1, char *av2)
+{
+	int	i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (av1[i])
+	{
+		if (av1[i] && av1[i] != ' ' && av1[i] != '\t')
+			break ;
+		i++;
+	}
+	while (av2[j])
+	{
+		if (av2[j] && av2[j] != ' ' && av2[j] != '\t')
+			break ;
+		j++;
+	}
+	if (ft_strlen(av2) == j || ft_strlen(av1) == i)
+	{
+		ft_putstr_fd("command not found\n", 2);
+		exit(-1);
+	}	
 }

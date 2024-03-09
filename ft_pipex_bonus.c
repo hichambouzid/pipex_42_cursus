@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:08:55 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/08 19:24:53 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/09 14:49:38 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-int	ft_child_proccess_doc(t_pipe *p, char **envp, int *pipfd, int *pipfd1)
+int ft_child_proccess_doc(t_pipe *p, char **envp, int *pipfd, int *pipfd1)
 {
+	// close(pipfd[0]);
 	ft_putstr_fd(p->buffer, pipfd[1]);
 	if (dup2(pipfd[0], 0) == -1 || dup2(pipfd1[1], 1) == -1)
 		return (ft_putstr_fd("Error has occured in dup\n", 2));
@@ -27,13 +28,12 @@ int	ft_child_proccess_doc(t_pipe *p, char **envp, int *pipfd, int *pipfd1)
 	return (0);
 }
 
-int	ft_parent_proccess_doc(t_pipe *p, char **envp, int *pipfd, int *pipfd1)
+int ft_parent_proccess_doc(t_pipe *p, char **envp, int *pipfd, int *pipfd1)
 {
 	if (dup2(p->fd2, 1) == -1 || dup2(pipfd1[0], 0) == -1)
 		return (ft_putstr_fd("Error has occured in dup\n", 2));
 	close(pipfd1[1]);
 	close(pipfd[1]);
-	close(1);
 	p->index = ft_cmd_valid_exist(p->env, p->cmd2);
 	p->env[p->index] = ft_same_arg(p->env, p->cmd2[0], p->index);
 	p->path = ft_chose_path(p->env[p->index], p->cmd2[0]);
@@ -42,11 +42,11 @@ int	ft_parent_proccess_doc(t_pipe *p, char **envp, int *pipfd, int *pipfd1)
 	return (0);
 }
 
-void	pipex_her_doc(char **envp, t_pipe p)
+void pipex_her_doc(char **envp, t_pipe p)
 {
-	int		pipfd[2];
-	int		pipfd1[2];
-	pid_t	pp;
+	int pipfd[2];
+	int pipfd1[2];
+	pid_t pp;
 
 	pipe(pipfd);
 	pipe(pipfd1);
@@ -60,11 +60,11 @@ void	pipex_her_doc(char **envp, t_pipe p)
 	}
 }
 
-int	ft_multiple_pips(t_pipe *p, char **envp, char **av, int ac)
+int ft_multiple_pips(t_pipe *p, char **envp, char **av, int ac)
 {
-	t_pipe	pip;
-	int		**tab;
-	pid_t	pp;
+	t_pipe pip;
+	int **tab;
+	pid_t pp;
 
 	if (ac == 5)
 	{
@@ -110,7 +110,7 @@ int	ft_multiple_pips(t_pipe *p, char **envp, char **av, int ac)
 		else if (pp == 0)
 		{
 			if (dup2(tab[pip.i - 3][0], 0) == -1 || dup2(tab[pip.i - 2][1],
-					1) == -1)
+														 1) == -1)
 			{
 				perror("ERROR IN DUP\n");
 				exit(-1);
@@ -132,9 +132,9 @@ int	ft_multiple_pips(t_pipe *p, char **envp, char **av, int ac)
 	return (0);
 }
 
-int	main(int ac, char **av, char **envp)
+int main(int ac, char **av, char **envp)
 {
-	t_pipe	pe;
+	t_pipe pe;
 
 	pe.buffer = 0;
 	if (!ft_strcmp(av[1], "here_doc") && ac == 6)
@@ -143,17 +143,17 @@ int	main(int ac, char **av, char **envp)
 		if (pe.fd2 < 0)
 			return (0);
 		pe.buffer = ft_get_buffer(av);
-		// printf("%s\n", pe.buffer);
 		ft_parce_1(&pe, (av + 1), envp);
-		printf("%s\n", av[5]);
 		pipex_her_doc(envp, pe);
 	}
 	else if (ac >= 5)
 	{
 		pe.fd1 = open(av[1], O_RDONLY);
+		if (pe.fd1 < 0)
+			return (-1);
 		pe.fd2 = open(av[ac - 1], O_RDWR | O_CREAT | O_TRUNC, 0777);
-		if (pe.fd1 < 0 || pe.fd2 < 0)
-			return (0);
+		if (pe.fd2 < 0)
+			return (-1);
 		pe.env = ft_parce_env(envp);
 		ft_multiple_pips(&pe, envp, av, ac);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:36:06 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/08 15:55:51 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:09:29 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int			ft_strlen(char *str);
 int			ft_strleen(char **ptr);
 int			ft_putstr_fd(char *s, int fd);
 char		*ft_strdup(char *s1);
-
+int ft_strncmp(char *s1, char *s2, int n);
+void ft_first_check(char *av1, char *av2);
 // functions used in bonus part
 
 int			ft_check(char *str, char c);
