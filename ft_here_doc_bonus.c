@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_here_doc_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 12:39:05 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/08 22:50:35 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/09 22:21:48 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,33 @@ void	ft_parce_cmd2(t_pipe *p, char **av, char **envp)
 		ft_putstr_fd("command not found\n", 2);
 		exit(-1);
 	}
+}
+
+int	ft_child_proccess_doc(t_pipe *p, char **envp, int *pipfd, int *pipfd1)
+{
+	ft_putstr_fd(p->buffer, pipfd[1]);
+	if (dup2(pipfd[0], 0) == -1 || dup2(pipfd1[1], 1) == -1)
+		return (ft_putstr_fd("Error has occured in dup\n", 2));
+	close(pipfd[1]);
+	close(pipfd1[0]);
+	p->index = ft_cmd_valid_exist(p->env, p->cmd1);
+	p->env[p->index] = ft_same_arg(p->env, p->cmd1[0], p->index);
+	p->path = ft_chose_path(p->env[p->index], p->cmd1[0]);
+	if (execve(p->path, p->cmd1, envp) == -1)
+		exit(-1);
+	return (0);
+}
+
+int	ft_parent_proccess_doc(t_pipe *p, char **envp, int *pipfd, int *pipfd1)
+{
+	if (dup2(p->fd2, 1) == -1 || dup2(pipfd1[0], 0) == -1)
+		return (ft_putstr_fd("Error has occured in dup\n", 2));
+	close(pipfd1[1]);
+	close(pipfd[1]);
+	p->index = ft_cmd_valid_exist(p->env, p->cmd2);
+	p->env[p->index] = ft_same_arg(p->env, p->cmd2[0], p->index);
+	p->path = ft_chose_path(p->env[p->index], p->cmd2[0]);
+	if (execve(p->path, p->cmd2, envp) == -1)
+		exit(-1);
+	return (0);
 }

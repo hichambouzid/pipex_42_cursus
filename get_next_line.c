@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 14:51:10 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/03 19:10:12 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/09 23:28:32 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ char	*get_read(char *ptr, int fd)
 		}
 		str[i] = 0;
 		ptr = ft_strjoin(ptr, str);
+		if (i == 0)
+			exit(-1);
 	}
 	free(str);
 	return (ptr);

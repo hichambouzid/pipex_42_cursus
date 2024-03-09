@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:36:06 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/09 15:09:29 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/09 23:19:53 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct variables
 	char	**cmd2;
 	char	*tmpr;
 	char	*buffer;
+	int		**tab;
 	int		fd1;
 	int		fd2;
 	int		index;
@@ -52,8 +53,8 @@ int			ft_strlen(char *str);
 int			ft_strleen(char **ptr);
 int			ft_putstr_fd(char *s, int fd);
 char		*ft_strdup(char *s1);
-int ft_strncmp(char *s1, char *s2, int n);
-void ft_first_check(char *av1, char *av2);
+int			ft_strncmp(char *s1, char *s2, int n);
+void		ft_first_check(char *av1, char *av2);
 // functions used in bonus part
 
 int			ft_check(char *str, char c);
@@ -80,5 +81,10 @@ void		pipex(t_pipe p, char **av, char **envp);
 int			**ft_pipes(int ac);
 int			ft_multiple_pips(t_pipe *p, char **envp, char **av, int ac);
 void		ft_close(int **tabfd, int fd1, int fd2);
+void		ft_dup(int in, int out, int **tab);
+int			ft_child_proccess_doc(t_pipe *p, char **envp, int *pipfd,
+				int *pipfd1);
+int			ft_parent_proccess_doc(t_pipe *p, char **envp, int *pipfd,
+				int *pipfd1);
 
 #endif
