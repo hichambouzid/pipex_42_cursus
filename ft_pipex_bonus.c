@@ -6,7 +6,11 @@
 /*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:08:55 by hibouzid          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2024/03/09 23:31:14 by hibouzid         ###   ########.fr       */
+=======
+/*   Updated: 2024/03/04 23:07:53 by hibouzid         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +18,15 @@
 
 int	ft_procces(t_pipe *p, char **av, int f, char **envp)
 {
+<<<<<<< Updated upstream
 	p->cmd1 = ft_split(av[f], ' ');
+=======
+	ft_putstr_fd(p->buffer, pipfd[1]);
+	if (dup2(pipfd[0], 0) == -1 || dup2(pipfd1[1], 1) == -1)
+		return (ft_putstr_fd("Error has occured in dup\n", 2));
+	close(pipfd[1]);
+	close(pipfd1[0]);
+>>>>>>> Stashed changes
 	p->index = ft_cmd_valid_exist(p->env, p->cmd1);
 	p->env[p->index] = ft_same_arg(p->env, p->cmd1[0], p->index);
 	p->path = ft_chose_path(p->env[p->index], p->cmd1[0]);
@@ -25,9 +37,28 @@ int	ft_procces(t_pipe *p, char **av, int f, char **envp)
 
 void	pipex_her_doc(char **envp, t_pipe p)
 {
+<<<<<<< Updated upstream
 	int		pipfd[2];
 	int		pipfd1[2];
 	pid_t	pp;
+=======
+	if (dup2(p->fd2, 1) == -1 || dup2(pipfd1[0], 0) == -1)
+		return (ft_putstr_fd("Error has occured in dup\n", 2));
+	close(pipfd1[1]);
+	close(pipfd[1]);
+	p->index = ft_cmd_valid_exist(p->env, p->cmd2);
+	p->env[p->index] = ft_same_arg(p->env, p->cmd2[0], p->index);
+	p->path = ft_chose_path(p->env[p->index], p->cmd2[0]);
+	execve(p->path, p->cmd2, envp);
+	return (0);
+}
+
+void pipex_her_doc(char **envp, t_pipe p)
+{
+	int pipfd[2];
+	int pipfd1[2];
+	pid_t pp;
+>>>>>>> Stashed changes
 
 	pipe(pipfd);
 	pipe(pipfd1);
@@ -75,7 +106,11 @@ int	main(int ac, char **av, char **envp)
 		if (pe.fd2 < 0)
 			return (0);
 		pe.buffer = ft_get_buffer(av);
+<<<<<<< Updated upstream
 		ft_parce_1(&pe, (av + 1), envp);
+=======
+		ft_parce_cmd2(&pe, av, envp);
+>>>>>>> Stashed changes
 		pipex_her_doc(envp, pe);
 	}
 	else if (ac >= 5)

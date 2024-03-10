@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_util_3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:44:37 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/09 15:34:32 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/10 17:17:17 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_parent_proccess(t_pipe *p, int *pipfd, char **envp)
 	return (0);
 }
 
-void	pipex(t_pipe p, char **av, char **envp)
+void	mpipex(t_pipe p, char **av, char **envp)
 {
 	int		pipfd[2];
 	pid_t	pp;

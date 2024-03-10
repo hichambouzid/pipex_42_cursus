@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_here_doc_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 12:39:05 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/09 22:21:48 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/10 17:17:54 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*ft_get_buffer(char **av)
 		else
 			free(pe.line);
 	}
+	close(0);
 	return (pe.buffer);
 }
 
@@ -41,8 +42,9 @@ void	ft_parce_cmd2(t_pipe *p, char **av, char **envp)
 	p->cmd1 = ft_split(av[3], ' ');
 	p->cmd2 = ft_split(av[4], ' ');
 	p->env = ft_parce_env(envp);
-	if (ft_parce_cmd(p->cmd1, p->cmd2, envp) == -1)
+	if (ft_parce_cmd(p->cmd1, p->cmd2, p->env) == -1)
 	{
+	// printf("iooooo\n");
 		ft_free(ft_strleen(p->cmd1), p->cmd1);
 		ft_free(ft_strleen(p->cmd2), p->cmd2);
 		ft_free(ft_strleen(p->env), p->env);
