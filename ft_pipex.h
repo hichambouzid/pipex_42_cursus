@@ -6,7 +6,7 @@
 /*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:36:06 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/09 23:19:53 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/10 18:10:35 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef struct variables
 	int		fd2;
 	int		index;
 	int		i;
+	int in;
+	int out;
 	char	*line;
 	char	*path;
 }			t_pipe;

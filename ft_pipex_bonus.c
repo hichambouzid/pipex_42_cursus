@@ -6,7 +6,7 @@
 /*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:08:55 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/09 23:31:14 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/10 18:29:07 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 
 int	ft_procces(t_pipe *p, char **av, int f, char **envp)
 {
+	printf("lllllll\n");
+	if (dup2(p->in, 0) == -1 || dup2(p->out, 1) == -1)
+	{
+		perror("ERROR IN DUP\n");
+		exit(-1);
+	}
+	ft_close(p->tab, p->in, p->out);
 	p->cmd1 = ft_split(av[f], ' ');
 	p->index = ft_cmd_valid_exist(p->env, p->cmd1);
 	p->env[p->index] = ft_same_arg(p->env, p->cmd1[0], p->index);
@@ -51,12 +58,33 @@ int	ft_multiple_pips(t_pipe *p, char **envp, char **av, int ac)
 	{
 		pp = fork();
 		if (pip.i == 2 && pp == 0)
-			ft_dup(p->fd1, p->tab[0][1], p->tab);
-		else if (pip.i == ac - 2 && pp == 0)
-			ft_dup(p->tab[pip.i - 3][0], p->fd2, p->tab);
-		else if (pp == 0)
-			ft_dup(p->tab[pip.i - 3][0], p->tab[pip.i - 2][1], p->tab);
+		{
+			printf("im here 0\n");
+
+			p->in = p->fd1;
+			p->out=  p->tab[0][1];
 		ft_procces(p, av, pip.i, envp);
+
+			// ft_dup(p->fd1, p->tab[0][1], p->tab);
+		}
+		else if (pip.i == ac - 3 && pp == 0)
+		{
+			printf("im here 1\n");
+			p->in = p->tab[pip.i - 3][0];
+			p->out = p->fd2;
+		ft_procces(p, av, pip.i, envp);
+
+			// ft_dup(p->tab[pip.i - 3][0], p->fd2, p->tab);
+		}
+		else if (pp == 0)
+		{
+			printf("im here 2\n");
+
+			p->in = p->tab[pip.i - 3][0];
+			p->out = p->tab[pip.i - 2][1];
+		ft_procces(p, av, pip.i, envp);
+			// ft_dup(p->tab[pip.i - 3][0], p->tab[pip.i - 2][1], p->tab);
+		}
 		pip.i++;
 	}
 	if (pp)
