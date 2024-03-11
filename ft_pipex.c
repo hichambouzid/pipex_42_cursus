@@ -6,7 +6,7 @@
 /*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:36:36 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/09 15:01:49 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/11 13:43:59 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(int ac, char **av, char **envp)
 	if (p.fd2 < 0)
 		return (ft_putstr_fd("no such file or directory\n", 2));
 	pipex(p, av, envp);
+	// system("leaks pipex");
 }
 
 // int main(int ac, char **av, char **envp)
