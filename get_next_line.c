@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 14:51:10 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/09 23:28:32 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:05:18 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-char	*get_read(char *ptr, int fd)
+char *get_read(char *ptr, int fd)
 {
-	int		i;
-	char	*str;
+	int i;
+	char *str;
 
 	i = 1;
 	str = malloc(sizeof(char) * (BUFFER_SIZE) + 1);
@@ -40,10 +40,10 @@ char	*get_read(char *ptr, int fd)
 	return (ptr);
 }
 
-char	*ft_cut(char *ptr)
+char *ft_cut(char *ptr)
 {
-	int		i;
-	char	*str;
+	int i;
+	char *str;
 
 	i = 0;
 	str = NULL;
@@ -63,7 +63,7 @@ char	*ft_cut(char *ptr)
 	return (str);
 }
 
-char	*ft_freee(char *str, char *ptr)
+char *ft_freee(char *str, char *ptr)
 {
 	if (*str == 0)
 	{
@@ -74,10 +74,10 @@ char	*ft_freee(char *str, char *ptr)
 	return (str);
 }
 
-char	*ft_line(char *ptr)
+char *ft_line(char *ptr)
 {
-	int		i;
-	char	*str;
+	int i;
+	char *str;
 
 	i = 0;
 	if (!ptr)
@@ -103,15 +103,16 @@ char	*ft_line(char *ptr)
 	return (ft_freee(str, ptr));
 }
 
-char	*get_next_line(int fd)
+char *get_next_line(int fd)
 {
-	static char	*ptr;
-	char		*str;
+	static char *ptr;
+	char *str;
 
 	if (fd == -1 || BUFFER_SIZE <= 0)
 		return (NULL);
 	ptr = get_read(ptr, fd);
 	str = ft_line(ptr);
 	ptr = ft_cut(ptr);
+	free(ptr);
 	return (str);
 }

@@ -6,13 +6,13 @@
 /*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:08:55 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/11 13:49:14 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:28:14 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-int	ft_procces(t_pipe *p, char **av, int f, char **envp)
+int ft_procces(t_pipe *p, char **av, int f, char **envp)
 {
 	p->cmd1 = ft_split(av[f], ' ');
 	p->index = ft_cmd_valid_exist(p->env, p->cmd1);
@@ -23,13 +23,14 @@ int	ft_procces(t_pipe *p, char **av, int f, char **envp)
 	return (0);
 }
 
-void	pipex_her_doc(char **envp, t_pipe p)
+void pipex_her_doc(char **envp, t_pipe p, int *pipfd, char **av)
 {
-	int		pipfd[2];
-	int		pipfd1[2];
-	pid_t	pp;
-
-	pipe(pipfd);
+	// int pipfd[2];
+	int pipfd1[2];
+	pid_t pp;
+	// pipe(pipfd);
+	ft_parce_1(&p, (av + 1), envp);
+	ft_get_buffer(av, pipfd);
 	pipe(pipfd1);
 	pp = fork();
 	if (pp == 0)
@@ -41,22 +42,30 @@ void	pipex_her_doc(char **envp, t_pipe p)
 	}
 }
 
-int	ft_multiple_pips(t_pipe *p, char **envp, char **av, int ac)
+int ft_multiple_pips(t_pipe *p, char **envp, char **av, int ac)
 {
-	t_pipe	pip;
-	pid_t	pp;
+	t_pipe pip;
+	pid_t pp;
 
 	pip.i = 2;
 	while (pip.i < ac - 1)
 	{
 		pp = fork();
 		if (pip.i == 2 && pp == 0)
+		{
 			ft_dup(p->fd1, p->tab[0][1], p->tab);
+			ft_procces(p, av, pip.i, envp);
+		}
 		else if (pip.i == ac - 2 && pp == 0)
+		{
 			ft_dup(p->tab[pip.i - 3][0], p->fd2, p->tab);
+			ft_procces(p, av, pip.i, envp);
+		}
 		else if (pp == 0)
+		{
 			ft_dup(p->tab[pip.i - 3][0], p->tab[pip.i - 2][1], p->tab);
-		ft_procces(p, av, pip.i, envp);
+			ft_procces(p, av, pip.i, envp);
+		}
 		pip.i++;
 	}
 	if (pp)
@@ -64,19 +73,20 @@ int	ft_multiple_pips(t_pipe *p, char **envp, char **av, int ac)
 	return (0);
 }
 
-int	main(int ac, char **av, char **envp)
+int main(int ac, char **av, char **envp)
 {
-	t_pipe	pe;
+	t_pipe pe;
+	int *pipfd = NULL;
 
 	pe.buffer = 0;
 	if (!ft_strcmp(av[1], "here_doc") && ac == 6)
 	{
+		pipfd = malloc(sizeof(int) * 2);
+		pipe(pipfd);
 		pe.fd2 = open(av[5], O_CREAT | O_RDWR | O_APPEND, 0777);
 		if (pe.fd2 < 0)
 			return (0);
-		pe.buffer = ft_get_buffer(av);
-		ft_parce_1(&pe, (av + 1), envp);
-		pipex_her_doc(envp, pe);
+		pipex_her_doc(envp, pe, pipfd, av);
 	}
 	else if (ac >= 5)
 	{

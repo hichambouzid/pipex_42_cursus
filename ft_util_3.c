@@ -6,7 +6,7 @@
 /*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:44:37 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/10 21:57:58 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:19:10 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,12 @@ void pipex(t_pipe p, char **av, char **envp)
 	pp = fork();
 	if (pp == 0)
 		ft_child_proccess(&p, pipfd, envp);
-	pp = fork();
-	if (pp == 0)
-		ft_parent_proccess(&p, pipfd, envp);
-	if (p.cmd1)
+	else
 	{
-		ft_free(ft_strleen(p.cmd1), p.cmd1);
-		ft_free(ft_strleen(p.cmd2), p.cmd2);
-		ft_free(ft_strleen(p.env), p.env);
+		ft_parent_proccess(&p, pipfd, envp);
 		wait(NULL);
 	}
+
 }
 
 void ft_parce_1(t_pipe *p, char **av, char **envp)

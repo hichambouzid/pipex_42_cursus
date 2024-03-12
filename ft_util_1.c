@@ -6,21 +6,21 @@
 /*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 15:23:26 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/02/29 16:43:40 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/11 16:45:54 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-int	ft_putstr_fd(char *s, int fd)
+int ft_putstr_fd(char *s, int fd)
 {
 	return (write(fd, s, ft_strlen(s)));
 }
 
-int	ft_parce_cmd(char **cmd1, char **cmd2, char **env)
+int ft_parce_cmd(char **cmd1, char **cmd2, char **env)
 {
 	if (ft_cmd_valid_exist(env, cmd1) >= 0 && ft_cmd_valid_exist(env,
-			cmd2) >= 0)
+																 cmd2) >= 0)
 		return (0);
 	else
 	{
@@ -31,9 +31,9 @@ int	ft_parce_cmd(char **cmd1, char **cmd2, char **env)
 	}
 }
 
-int	ft_strleen(char **ptr)
+int ft_strleen(char **ptr)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (ptr[i])
@@ -41,10 +41,10 @@ int	ft_strleen(char **ptr)
 	return (i);
 }
 
-char	**ft_add_to_last(char **ptr, char *cmd)
+char **ft_add_to_last(char **ptr, char *cmd)
 {
-	int		len;
-	char	**str;
+	int len;
+	char **str;
 
 	len = ft_strleen(ptr);
 	str = malloc(sizeof(char *) * (len + 2));
@@ -60,11 +60,11 @@ char	**ft_add_to_last(char **ptr, char *cmd)
 	return (str);
 }
 
-int	ft_cmd_valid_exist(char **ptr, char **cmd)
+int ft_cmd_valid_exist(char **ptr, char **cmd)
 {
-	int		i;
-	char	*str;
-	char	*str1;
+	int i;
+	char *str;
+	char *str1;
 
 	i = 0;
 	while (ptr[i])
@@ -78,7 +78,11 @@ int	ft_cmd_valid_exist(char **ptr, char **cmd)
 			return (i);
 		}
 		else if (!access(cmd[0], X_OK | F_OK))
+		{
+			free(str1);
+			free(str);
 			return (i);
+		}
 		i++;
 	}
 	free(str1);

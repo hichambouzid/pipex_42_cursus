@@ -15,7 +15,7 @@ OBJS = $(CFILS:.c=.o)
 OBJS_BONUS = $(CFILS_BONUS:.c=.o)
 
 $(NAME):$(OBJS)
-	cc -fsanitize=address -g3 $(OBJS) -o $(NAME)
+	cc  $(OBJS) -o $(NAME)
 
 $(NAME_BONUS):$(OBJS_BONUS)
 	cc $(OBJS_BONUS) -o $(NAME_BONUS)
