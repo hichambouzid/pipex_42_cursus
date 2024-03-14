@@ -5,31 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 15:23:26 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/11 16:45:54 by hibouzid         ###   ########.fr       */
+/*   Created: 2024/03/12 21:39:15 by hibouzid          #+#    #+#             */
+/*   Updated: 2024/03/14 15:34:37 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
-
-int ft_putstr_fd(char *s, int fd)
-{
-	return (write(fd, s, ft_strlen(s)));
-}
-
-int ft_parce_cmd(char **cmd1, char **cmd2, char **env)
-{
-	if (ft_cmd_valid_exist(env, cmd1) >= 0 && ft_cmd_valid_exist(env,
-																 cmd2) >= 0)
-		return (0);
-	else
-	{
-		ft_free(ft_strleen(cmd1), cmd1);
-		ft_free(ft_strleen(cmd2), cmd2);
-		ft_free(ft_strleen(env), env);
-		return (-1);
-	}
-}
 
 int ft_strleen(char **ptr)
 {
@@ -41,67 +22,60 @@ int ft_strleen(char **ptr)
 	return (i);
 }
 
-char **ft_add_to_last(char **ptr, char *cmd)
+int ft_parce_cmd(char **cmd, char **env)
 {
-	int len;
-	char **str;
-
-	len = ft_strleen(ptr);
-	str = malloc(sizeof(char *) * (len + 2));
-	if (!str)
-		return (NULL);
-	str[len + 1] = 0;
-	len = -1;
-	while (ptr[++len])
-		str[len] = ft_strdup(ptr[len]);
-	str[len] = ft_strdup(cmd);
-	free(cmd);
-	ft_free(ft_strleen(ptr), ptr);
-	return (str);
+	if (ft_cmd_valid(env, cmd) >= 0)
+		return (0);
+	else
+		return (-1);
 }
 
-int ft_cmd_valid_exist(char **ptr, char **cmd)
+char **ft_parce_env(char **env)
 {
 	int i;
-	char *str;
-	char *str1;
+	int index;
+	char *tmp;
+	char **tab;
 
+	index = ft_index(env, "PATH=");
+	if (index < 0)
+		exit(-1);
+	tab = ft_split(env[index] + 5, ':');
 	i = 0;
-	while (ptr[i])
+	while (tab[i])
 	{
-		str1 = ft_strjoin(ptr[i], "/");
-		str = ft_strjoin(str1, cmd[0]);
-		if (!access(str, X_OK | F_OK))
-		{
-			free(str);
-			free(str1);
-			return (i);
-		}
-		else if (!access(cmd[0], X_OK | F_OK))
-		{
-			free(str1);
-			free(str);
-			return (i);
-		}
+		tmp = tab[i];
+		tab[i] = ft_strjoin(tab[i], "/");
+		free(tmp);
 		i++;
 	}
-	free(str1);
-	free(str);
+	return (tab);
+}
+
+int	ft_index(char **envp, char *str)
+{
+	int i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (!ft_strncmp(envp[i], str, ft_strlen(str)))
+			return (i);
+		i++;
+	}
 	return (-1);
 }
 
-// int ft_parce_file1(t_pipe *p)
-// {
-// 	char *tmp;
+int ft_strncmp(char *s1, char *s2, int n)
+{
+	int i;
 
-// 	if (p->fd < 0)
-// 	{
-// 		ft_free(ft_strleen(p->cmd1), p->cmd1);
-// 		ft_free(ft_strleen(p->cmd2), p->cmd2);
-// 		ft_free(ft_strlen(p->env), p->env);
-// 		return (-1);
-// 	}
-// 	else
-// 	{
-// 	}
-// }
+	i = 0;
+	while ((s1[i] && s2[i]) && i < n)
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
+	}
+	return (0);	
+}

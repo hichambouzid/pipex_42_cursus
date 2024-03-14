@@ -3,69 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_util_0.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 23:15:39 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/12 23:22:45 by hibouzid         ###   ########.fr       */
+/*   Created: 2024/02/25 13:08:54 by hibouzid          #+#    #+#             */
+/*   Updated: 2024/03/09 15:35:26 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "ft_pipex.h"
-
-int ft_strlen(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
-char *ft_strdup(char *str)
-{
-	int i;
-	char *ptr;
-
-	i = ft_strlen(str);
-	ptr = malloc(sizeof(char) * (i + 1));
-	if (!str)
-		return (NULL);
-	ptr[i] = 0;
-	i = 0;
-	while (str[i])
-	{
-		ptr[i] = str[i];
-		i++;
-	}
-	return (ptr);
-}
-
-char	*ft_strjoin(char *s1, char *s2)
-{
-	int		total;
-	char	*ptr;
-	int		i;
-	int		j;
-
-	total = ft_strlen(s1) + ft_strlen(s2);
-	ptr = malloc(sizeof(char) * (total + 1));
-	if (!ptr)
-		return (NULL);
-	ptr[total] = 0;
-	i = 0;
-	j = 0;
-	while (s1[i])
-	{
-		ptr[i] = s1[i];
-		i++;
-	}
-	while (s2[j])
-		ptr[i++] = s2[j++];
-	return (ptr);
-}
 
 int	ft_strcmp(char *s1, char *s2)
 {
@@ -83,7 +28,72 @@ int	ft_strcmp(char *s1, char *s2)
 	return (0);
 }
 
-int	ft_putstr_fd(char *s, int fd)
+int	ft_index(char **envp, char *str)
 {
-	return (write(fd, s, ft_strlen(s)));
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], str, ft_strlen(str)) == 0)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+char	**ft_parce_env(char **envp)
+{
+	int		i;
+	int		index;
+	char	**tab;
+
+	index = ft_index(envp, "PATH");
+	i = 0;
+	if (index == -1)
+		return (NULL);
+	while (envp[index][i])
+	{
+		if (is_separator(envp[index][i], '/'))
+			break ;
+		i++;
+	}
+	tab = ft_split(envp[index] + i, ':');
+	return (tab);
+}
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	int		total;
+	char	*ptr;
+	int		i;
+	int		j;
+
+	if (!s1)
+		s1 = ft_strdup("");
+	total = ft_strlen(s1) + ft_strlen(s2);
+	ptr = malloc(sizeof(char) * (total + 1));
+	if (!ptr)
+		return (NULL);
+	ptr[total] = 0;
+	i = 0;
+	j = 0;
+	while (s1[i])
+	{
+		ptr[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+		ptr[i++] = s2[j++];
+	return (ptr);
 }

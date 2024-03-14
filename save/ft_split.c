@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:05:34 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/13 00:44:22 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:30:48 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,3 @@ char	**ft_split(char const *s, char c)
 	ptr[count] = 0;
 	return (ft_alloc(ptr, s, c, count));
 }
-
