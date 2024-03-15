@@ -12,9 +12,9 @@
 
 #include "ft_pipex.h"
 
-int ft_strleen(char **ptr)
+int	ft_strleen(char **ptr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (ptr[i])
@@ -22,7 +22,7 @@ int ft_strleen(char **ptr)
 	return (i);
 }
 
-int ft_parce_cmd(char **cmd, char **env)
+int	ft_parce_cmd(char **cmd, char **env)
 {
 	if (ft_cmd_valid(env, cmd) >= 0)
 		return (0);
@@ -30,12 +30,12 @@ int ft_parce_cmd(char **cmd, char **env)
 		return (-1);
 }
 
-char **ft_parce_env(char **env)
+char	**ft_parce_env(char **env)
 {
-	int i;
-	int index;
-	char *tmp;
-	char **tab;
+	int		i;
+	int		index;
+	char	*tmp;
+	char	**tab;
 
 	index = ft_index(env, "PATH=");
 	if (index < 0)
@@ -54,7 +54,7 @@ char **ft_parce_env(char **env)
 
 int	ft_index(char **envp, char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (envp[i])
@@ -66,9 +66,9 @@ int	ft_index(char **envp, char *str)
 	return (-1);
 }
 
-int ft_strncmp(char *s1, char *s2, int n)
+int	ft_strncmp(char *s1, char *s2, int n)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while ((s1[i] && s2[i]) && i < n)
@@ -77,5 +77,5 @@ int ft_strncmp(char *s1, char *s2, int n)
 			return (s1[i] - s2[i]);
 		i++;
 	}
-	return (0);	
+	return (0);
 }

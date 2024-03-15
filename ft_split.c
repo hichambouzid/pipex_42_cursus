@@ -98,4 +98,3 @@ char	**ft_split(char const *s, char c)
 	ptr[count] = 0;
 	return (ft_alloc(ptr, s, c, count));
 }
-

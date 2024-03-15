@@ -10,13 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "ft_pipex.h"
 
-int ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -24,10 +22,10 @@ int ft_strlen(char *str)
 	return (i);
 }
 
-char *ft_strdup(char *str)
+char	*ft_strdup(char *str)
 {
-	int i;
-	char *ptr;
+	int		i;
+	char	*ptr;
 
 	i = ft_strlen(str);
 	ptr = malloc(sizeof(char) * (i + 1));

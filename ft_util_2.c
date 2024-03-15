@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_util_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 00:31:07 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/14 18:26:36 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/15 01:02:22 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-int ft_cmd_valid(char **env, char **cmd)
+int	ft_cmd_valid(char **env, char **cmd)
 {
-	int i;
-	char *tmp;
+	int		i;
+	char	*tmp;
 
 	i = 0;
 	if (!ft_strncmp(cmd[i], ".", 1) || !ft_strncmp(cmd[i], "./", 2))
@@ -39,7 +39,7 @@ int ft_cmd_valid(char **env, char **cmd)
 	return (-1);
 }
 
-char *ft_freee(char *str, char *ptr)
+char	*ft_freee(char *str, char *ptr)
 {
 	if (*str == 0)
 	{
@@ -48,4 +48,17 @@ char *ft_freee(char *str, char *ptr)
 		return (NULL);
 	}
 	return (str);
+}
+
+char	***fill_tab_cmd(int len, char ***tab_cmd, char **av)
+{
+	int	i;
+
+	i = 0;
+	while (i < len)
+	{
+		tab_cmd[i] = ft_split(av[i], ' ');
+		i++;
+	}
+	return (tab_cmd);
 }
