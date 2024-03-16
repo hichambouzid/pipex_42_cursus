@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parce_all.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:53:04 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/15 01:02:18 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/16 23:38:45 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-char	**get_all_path(int number)
+char **get_all_path(int number)
 {
-	char	**paths;
+	char **paths;
 
 	paths = malloc(sizeof(char *) * (number + 1));
 	if (!paths)
@@ -23,19 +23,19 @@ char	**get_all_path(int number)
 	return (paths);
 }
 
-void	ft_error(char *str, int exi)
+void ft_error(char *str, int exi)
 {
 	ft_putstr_fd(str, 2);
 	exit(exi);
 }
 
-void	ft_parce_all(int ac, char **av, char **envp, t_pipe *p)
+void ft_parce_all(int ac, char **av, char **envp, t_pipe *p)
 {
 	p->i = ac - 3;
 	p->env = ft_parce_env(envp);
 	p->tab_cmd = malloc(sizeof(char *) * (p->i + 1));
 	if (!p->tab_cmd)
-		return ;
+		return;
 	p->tab_cmd[p->i] = NULL;
 	p->tab_cmd = fill_tab_cmd(ac - 3, p->tab_cmd, av);
 	p->paths = get_all_path(ac - 3);
@@ -45,9 +45,13 @@ void	ft_parce_all(int ac, char **av, char **envp, t_pipe *p)
 		p->f = ft_cmd_valid(p->env, p->tab_cmd[p->i]);
 		if (p->f == -1)
 		{
-			ft_free_cmd(ac - 4, p->tab_cmd);
-			ft_free(ft_strleen(p->paths), p->paths);
-			ft_free(ft_strleen(p->env), p->env);
+			// printf();
+			ft_free_cmd(p->i - 1, p->tab_cmd);
+			ft_free(p->i - 1, p->paths);
+			if (!p->env)
+				free(p->env);
+			if (p->env)
+				ft_free(ft_strleen(p->env), p->env);
 			ft_error("Command not found\n", -1);
 		}
 		else
@@ -56,13 +60,15 @@ void	ft_parce_all(int ac, char **av, char **envp, t_pipe *p)
 	}
 }
 
-char	*ft_chose_path(int number, char **env, char **cmd)
+char *ft_chose_path(int number, char **env, char **cmd)
 {
-	int		i;
-	char	*tmp;
+	int i;
+	char *tmp;
 
 	if (number == 1)
+	{
 		return (ft_strdup(cmd[0]));
+	}
 	i = 0;
 	while (env[i])
 	{
@@ -76,11 +82,12 @@ char	*ft_chose_path(int number, char **env, char **cmd)
 	return (NULL);
 }
 
-char	***ft_free_cmd(int len, char ***tab_cmd)
+char ***ft_free_cmd(int len, char ***tab_cmd)
 {
 	while (len >= 0)
 	{
-		ft_free(ft_strleen(tab_cmd[len]), tab_cmd[len]);
+		if (tab_cmd[len])
+			ft_free(ft_strleen(tab_cmd[len]), tab_cmd[len]);
 		len--;
 	}
 	free(tab_cmd);

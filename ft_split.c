@@ -6,21 +6,21 @@
 /*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:05:34 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/13 00:44:22 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/16 22:02:40 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-int	is_separator(char s, char c)
+int is_separator(char s, char c)
 {
 	return ((c == s));
 }
 
-int	ft_count(char const *s, char c)
+int ft_count(char const *s, char c)
 {
-	int	count;
-	int	i;
+	int count;
+	int i;
 
 	i = 0;
 	count = 0;
@@ -38,7 +38,7 @@ int	ft_count(char const *s, char c)
 	return (count);
 }
 
-char	**ft_free(int index, char **ptr)
+char **ft_free(int index, char **ptr)
 {
 	while (index >= 0)
 	{
@@ -49,11 +49,11 @@ char	**ft_free(int index, char **ptr)
 	return (0);
 }
 
-char	**ft_alloc(char **ptr, const char *s, char c, int e)
+char **ft_alloc(char **ptr, const char *s, char c, int e)
 {
-	int	i;
-	int	j;
-	int	f;
+	int i;
+	int j;
+	int f;
 
 	i = 0;
 	j = 0;
@@ -63,7 +63,7 @@ char	**ft_alloc(char **ptr, const char *s, char c, int e)
 			i++;
 		f = i;
 		if (!s[f])
-			break ;
+			break;
 		while (!is_separator(s[f], c) && s[f])
 			f++;
 		ptr[j] = malloc(sizeof(char) * (1 + f - i));
@@ -78,10 +78,10 @@ char	**ft_alloc(char **ptr, const char *s, char c, int e)
 	return (ptr);
 }
 
-char	**ft_split(char const *s, char c)
+char **ft_split(char const *s, char c)
 {
-	char	**ptr;
-	int		count;
+	char **ptr;
+	int count;
 
 	if (!s || !*s)
 	{
