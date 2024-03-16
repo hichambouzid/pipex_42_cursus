@@ -5,8 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< HEAD
 /*   Created: 2024/03/12 21:39:08 by hibouzid          #+#    #+#             */
 /*   Updated: 2024/03/15 21:35:19 by hibouzid         ###   ########.fr       */
+=======
+/*   Created: 2024/02/20 10:36:36 by hibouzid          #+#    #+#             */
+/*   Updated: 2024/03/11 13:43:59 by hibouzid         ###   ########.fr       */
+>>>>>>> edc993a (update some files)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +19,27 @@
 
 void ft_process(t_pipe *p, int in, int *fd)
 {
+<<<<<<< HEAD
 	if (dup2(p->fd1, 0) == -1 || dup2(fd[1], 1) == -1)
 		ft_error("error in dup2 function\n", -1);
 	close(fd[0]);
 	if (execve(p->paths[in], p->tab_cmd[in], p->env) == -1)
 		ft_error("error in execve function\n", -1);
 	return;
+=======
+	t_pipe	p;
+
+	if (ac != 5)
+		return (ft_putstr_fd("error in argument\n", 2));
+	p.fd1 = open(av[1], O_RDONLY);
+	if (p.fd1 < 0)
+		return (ft_putstr_fd("no such file or directory\n", 2));
+	p.fd2 = open(av[4], O_RDWR | O_CREAT | O_TRUNC, 0777);
+	if (p.fd2 < 0)
+		return (ft_putstr_fd("no such file or directory\n", 2));
+	pipex(p, av, envp);
+	// system("leaks pipex");
+>>>>>>> edc993a (update some files)
 }
 
 void child1(t_pipe *p, int in, int *fd)
