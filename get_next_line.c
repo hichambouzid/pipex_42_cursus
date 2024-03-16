@@ -12,13 +12,12 @@
 
 #include "ft_pipex.h"
 
-char *get_read(char *ptr, int fd)
+char	*get_read(char *ptr, int fd)
 {
-	int i;
-	char *str;
+	int		i;
+	char	*str;
 
 	i = 1;
-
 	str = malloc(sizeof(char) * (BUFFER_SIZE) + 1);
 	if (!str)
 		return (NULL);
@@ -41,10 +40,10 @@ char *get_read(char *ptr, int fd)
 	return (ptr);
 }
 
-char *ft_cut(char *ptr)
+char	*ft_cut(char *ptr)
 {
-	int i;
-	char *str;
+	int		i;
+	char	*str;
 
 	i = 0;
 	str = NULL;
@@ -64,10 +63,10 @@ char *ft_cut(char *ptr)
 	return (str);
 }
 
-char *ft_line(char *ptr)
+char	*ft_line(char *ptr)
 {
-	int i;
-	char *str;
+	int		i;
+	char	*str;
 
 	i = 0;
 	if (!ptr)
@@ -93,11 +92,11 @@ char *ft_line(char *ptr)
 	return (ft_freee(str, ptr));
 }
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	static char *ptr;
-	char *str;
-	char *tmp;
+	static char	*ptr;
+	char		*str;
+	char		*tmp;
 
 	tmp = 0;
 	str = 0;

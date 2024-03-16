@@ -12,10 +12,10 @@
 
 #include "ft_pipex.h"
 
-int ft_cmd_valid(char **env, char **cmd)
+int	ft_cmd_valid(char **env, char **cmd)
 {
-	int i;
-	char *tmp;
+	int		i;
+	char	*tmp;
 
 	i = 0;
 	if (!ft_strncmp(cmd[i], ".", 1) || !ft_strncmp(cmd[i], "./", 2))
@@ -39,7 +39,7 @@ int ft_cmd_valid(char **env, char **cmd)
 	return (-1);
 }
 
-char *ft_freee(char *str, char *ptr)
+char	*ft_freee(char *str, char *ptr)
 {
 	if (*str == 0)
 	{
@@ -50,9 +50,9 @@ char *ft_freee(char *str, char *ptr)
 	return (str);
 }
 
-char ***fill_tab_cmd(int len, char ***tab_cmd, char **av)
+char	***fill_tab_cmd(int len, char ***tab_cmd, char **av)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < len)
@@ -63,23 +63,23 @@ char ***fill_tab_cmd(int len, char ***tab_cmd, char **av)
 	return (tab_cmd);
 }
 
-void ft_first_check(char *av1, char *av2)
+void	ft_first_check(char *av1, char *av2)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
 	while (av1[i])
 	{
 		if (av1[i] && av1[i] != ' ' && av1[i] != '\t')
-			break;
+			break ;
 		i++;
 	}
 	while (av2[j])
 	{
 		if (av2[j] && av2[j] != ' ' && av2[j] != '\t')
-			break;
+			break ;
 		j++;
 	}
 	if (ft_strlen(av2) == j || ft_strlen(av1) == i)
