@@ -3,41 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:39:08 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/17 03:27:07 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/17 17:17:47 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-void	ft_process(t_pipe *p, int in, int *fd)
+void ft_process(t_pipe *p, int in, int *fd)
 {
 	if (dup2(p->fd1, 0) == -1 || dup2(fd[1], 1) == -1)
 		ft_error("error in dup2 function\n", -1);
 	close(fd[0]);
+	if (!p->paths[in])
+		p->paths[in] = p->tab_cmd[in][0];
 	if (execve(p->paths[in], p->tab_cmd[in], p->env) == -1)
 		ft_error("error in execve function\n", -1);
-	return ;
+	return;
 }
 
-void	child1(t_pipe *p, int in, int *fd)
+void child1(t_pipe *p, int in, int *fd)
 {
 	if (dup2(fd[0], 0) == -1 || dup2(p->fd2, 1) == -1)
 		ft_error("error in dup2 function\n", -1);
 	close(p->fd1);
 	close(fd[1]);
+	if (!p->paths[in])
+		p->paths[in] = p->tab_cmd[in][0];
 	if (execve(p->paths[in], p->tab_cmd[in], p->env) == -1)
 		ft_error("error in execve function\n", -1);
-	return ;
+	return;
 }
 
-void	pipex(t_pipe pp)
+void pipex(t_pipe pp)
 {
-	pid_t	pid;
-	pid_t	pid1;
-	int		fd[2];
+	pid_t pid;
+	pid_t pid1;
+	int fd[2];
 
 	if (pipe(fd) == -1)
 		ft_error("error in pipe function\n", -1);
@@ -57,9 +61,9 @@ void	pipex(t_pipe pp)
 		;
 }
 
-int	main(int ac, char **av, char **envp)
+int main(int ac, char **av, char **envp)
 {
-	t_pipe	p;
+	t_pipe p;
 
 	if (ac != 5)
 		ft_error("Invalide number of argument\n", -1);
@@ -75,6 +79,5 @@ int	main(int ac, char **av, char **envp)
 	ft_free_cmd(1, p.tab_cmd);
 	ft_free(1, p.paths);
 	ft_free(ft_strleen(p.env), p.env);
-	system("leaks pipex");
 	return (0);
 }

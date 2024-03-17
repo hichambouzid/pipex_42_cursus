@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipex_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 01:32:52 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/17 00:08:05 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/17 17:17:40 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipex.h"
 
-void	write_in_pipe(char *limeter, int *fd)
+void write_in_pipe(char *limeter, int *fd)
 {
-	char	*line;
-	char	*f;
+	char *line;
+	char *f;
 
 	f = ft_strjoin(limeter, "\n");
 	while (1)
@@ -26,15 +26,15 @@ void	write_in_pipe(char *limeter, int *fd)
 		if (!ft_strcmp(line, f))
 		{
 			free(line);
-			break ;
+			break;
 		}
 		free(line);
 	}
 	free(f);
-	return ;
+	return;
 }
 
-int	ft_child(t_pipe p, int *fd11, int *fd00)
+int ft_child(t_pipe p, int *fd11, int *fd00)
 {
 	close(fd11[1]);
 	if (dup2(fd11[0], 0) == -1 || dup2(fd00[1], 1) == -1)
@@ -42,12 +42,14 @@ int	ft_child(t_pipe p, int *fd11, int *fd00)
 	close(fd00[0]);
 	close(fd00[1]);
 	close(fd11[0]);
+	if (!p.paths[0])
+		p.paths[0] = p.tab_cmd[0][0];
 	if (execve(p.paths[0], p.tab_cmd[0], p.env) == -1)
-		ft_error("execve problem\n", -1);
+		ft_error("execve 1problem\n", -1);
 	return (0);
 }
 
-int	ft_child1(t_pipe p, int *fd11, int *fd00, int fd2)
+int ft_child1(t_pipe p, int *fd11, int *fd00, int fd2)
 {
 	close(fd11[1]);
 	close(fd00[1]);
@@ -56,15 +58,17 @@ int	ft_child1(t_pipe p, int *fd11, int *fd00, int fd2)
 	close(fd11[0]);
 	close(fd00[0]);
 	close(fd2);
+	if (!p.paths[1])
+		p.paths[1] = p.tab_cmd[1][0];
 	if (execve(p.paths[1], p.tab_cmd[1], p.env) == -1)
-		ft_error("execve problem\n", -1);
+		ft_error("execve 2problem\n", -1);
 	return (0);
 }
 
-void	ft_here_doc(int ac, char **av, char **envp)
+void ft_here_doc(int ac, char **av, char **envp)
 {
-	t_pipe	p;
-	int		fd[2][2];
+	t_pipe p;
+	int fd[2][2];
 
 	ft_parce_all(ac - 1, av + 3, envp, &p);
 	p.fd2 = open(av[ac - 1], O_CREAT | O_RDWR | O_APPEND, 0777);
@@ -90,7 +94,7 @@ void	ft_here_doc(int ac, char **av, char **envp)
 	ft_free(ft_strleen(p.env), p.env);
 }
 
-int	main(int ac, char **av, char **envp)
+int main(int ac, char **av, char **envp)
 {
 	if (ac < 5)
 		ft_error("Invalide number of argument\n", -1);
