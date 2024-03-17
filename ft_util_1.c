@@ -6,7 +6,7 @@
 /*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:39:15 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/16 23:48:59 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/17 03:29:27 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_strleen(char **ptr)
 	int	i;
 
 	i = 0;
+	if (!ptr)
+		return (0);
 	while (ptr[i])
 		i++;
 	return (i);
@@ -39,7 +41,11 @@ char	**ft_parce_env(char **env)
 
 	index = ft_index(env, "PATH=");
 	if (index < 0)
+	{
+		// tab = malloc(sizeof(char *));
+		// tab = 0;
 		return (NULL);
+	}
 	tab = ft_split(env[index] + 5, ':');
 	i = 0;
 	while (tab[i])

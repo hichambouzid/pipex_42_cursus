@@ -6,7 +6,7 @@
 /*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 01:53:04 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/17 00:08:48 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/17 03:11:03 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,17 @@
 char	**get_all_path(int number)
 {
 	char	**paths;
+	int		i;
 
+	i = 0;
 	paths = malloc(sizeof(char *) * (number + 1));
 	if (!paths)
 		return (NULL);
-	paths[number] = 0;
+	while (i < number)
+	{
+		paths[i] = 0;
+		i++;
+	}
 	return (paths);
 }
 
@@ -38,7 +44,7 @@ void	ft_parce_all(int ac, char **av, char **envp, t_pipe *p)
 	p->tab_cmd = fill_tab_cmd(ac - 3, p->tab_cmd, av);
 	p->paths = get_all_path(ac - 3);
 	p->i = 0;
-	while (p->i < ac - 3)
+	while (p->i < ac - 3 && p->env)
 	{
 		p->f = ft_cmd_valid(p->env, p->tab_cmd[p->i]);
 		if (p->f == -1)

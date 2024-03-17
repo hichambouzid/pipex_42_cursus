@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hibouzid <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/08 12:05:34 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/16 22:02:40 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/17 03:20:30 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,15 @@ int	ft_count(char const *s, char c)
 
 char	**ft_free(int index, char **ptr)
 {
+	if (index == 0)
+	{
+		free(ptr);
+		return (0);
+	}
 	while (index >= 0)
 	{
-		free(ptr[index]);
+		if (ptr[index])
+			free(ptr[index]);
 		index--;
 	}
 	free(ptr);

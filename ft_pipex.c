@@ -6,7 +6,7 @@
 /*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:39:08 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/16 23:57:56 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/17 03:27:07 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ int	main(int ac, char **av, char **envp)
 		ft_error("cann't open a file\n", -1);
 	pipex(p);
 	ft_free_cmd(1, p.tab_cmd);
-	ft_free(ft_strleen(p.paths), p.paths);
-	if (p.env)
-		ft_free(ft_strleen(p.env), p.env);
+	ft_free(1, p.paths);
+	ft_free(ft_strleen(p.env), p.env);
+	system("leaks pipex");
 	return (0);
 }
