@@ -6,7 +6,7 @@
 /*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 01:32:52 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/16 01:18:26 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/17 00:08:05 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ int	ft_child1(t_pipe p, int *fd11, int *fd00, int fd2)
 void	ft_here_doc(int ac, char **av, char **envp)
 {
 	t_pipe	p;
-	pid_t	f1;
-	pid_t	f2;
 	int		fd[2][2];
 
 	ft_parce_all(ac - 1, av + 3, envp, &p);
@@ -75,11 +73,11 @@ void	ft_here_doc(int ac, char **av, char **envp)
 	if (pipe(fd[1]) == -1 || pipe(fd[0]) == -1)
 		ft_error("pipe problem\n", -1);
 	write_in_pipe(av[2], fd[1]);
-	f1 = fork();
-	if (f1 == 0)
+	p.f1 = fork();
+	if (p.f1 == 0)
 		ft_child(p, fd[1], fd[0]);
-	f2 = fork();
-	if (f2 == 0)
+	p.f2 = fork();
+	if (p.f2 == 0)
 		ft_child1(p, fd[1], fd[0], p.fd2);
 	close(fd[0][1]);
 	close(fd[0][0]);
@@ -90,7 +88,6 @@ void	ft_here_doc(int ac, char **av, char **envp)
 	ft_free_cmd(1, p.tab_cmd);
 	ft_free(ft_strleen(p.paths), p.paths);
 	ft_free(ft_strleen(p.env), p.env);
-	return ;
 }
 
 int	main(int ac, char **av, char **envp)
@@ -99,5 +96,4 @@ int	main(int ac, char **av, char **envp)
 		ft_error("Invalide number of argument\n", -1);
 	if (ac == 6 && !ft_strcmp("here_doc", av[1]))
 		ft_here_doc(ac, av, envp);
-	// sys÷÷tem("leaks pipex_bonus");
 }

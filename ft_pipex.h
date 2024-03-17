@@ -6,7 +6,7 @@
 /*   By: hibouzid <hibouzid@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 21:39:40 by hibouzid          #+#    #+#             */
-/*   Updated: 2024/03/16 01:13:06 by hibouzid         ###   ########.fr       */
+/*   Updated: 2024/03/16 23:53:29 by hibouzid         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef struct ft_pipex
 	int		fd2;
 	char	**env;
 	int		f;
+	pid_t	f1;
+	pid_t	f2;
 	char	***tab_cmd;
 	char	**paths;
 	char	*path;
